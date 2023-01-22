@@ -23,6 +23,6 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient getIngredientsId(Integer id) {
-        return ingredientMap.getOrDefault(id, null);
+        return ingredientMap.get(id);
     }
 }

@@ -21,6 +21,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipe(Integer id) {
-        return recipeMap.getOrDefault(id, null);
+        return recipeMap.get(id);
     }
 }
