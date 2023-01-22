@@ -2,6 +2,7 @@ package skay.pro.webapplicationstructure.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Recipe {
     @NotBlank
     private String name;
