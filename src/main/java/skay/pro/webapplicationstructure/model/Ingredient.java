@@ -1,9 +1,6 @@
 package skay.pro.webapplicationstructure.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -11,6 +8,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Ingredient {
 
     @NotBlank(message = "Название не может быть пустым")
