@@ -9,6 +9,7 @@ import skay.pro.webapplicationstructure.model.Ingredient;
 import skay.pro.webapplicationstructure.services.IngredientService;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,26 @@ public class IngredientController {
         return ingredientService.getIngredientsId(id);
     }
 
-    @PutMapping()
+    @PostMapping()
     Ingredient appendIngredient(@Valid @RequestBody Ingredient ingredient) {
         return ingredientService.appendIngredient(ingredient);
     }
+
+    @GetMapping
+    public Collection<Ingredient> getAll() {
+        return this.ingredientService.getAll();
+    }
+
+    @DeleteMapping("{id}")
+    Ingredient delIngredient(@PathVariable Integer id) {
+        return ingredientService.remuvIngredient(id);
+    }
+
+    @PutMapping("{id}")
+    Ingredient updateIngredient(@PathVariable Integer id, @RequestBody Ingredient ingredient) {
+        return ingredientService.updateIngredient(id, ingredient);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
