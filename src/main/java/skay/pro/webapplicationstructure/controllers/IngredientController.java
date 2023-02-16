@@ -38,6 +38,7 @@ public class IngredientController {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+
         return errors;
     }
 
