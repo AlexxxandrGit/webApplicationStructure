@@ -18,13 +18,14 @@ import java.util.Map;
 
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
     private FileService fileService;
 
     public RecipeServiceImpl(@Qualifier("recipeFileService") FileService fileService) {
         this.fileService = fileService;
     }
+
 
     private Map<Integer, Recipe> recipeMap = new HashMap<>();
     private static Integer id = 0;
