@@ -1,7 +1,7 @@
 package skay.pro.webapplicationstructure.services.impl;
 
 import exception.FileProcessingException;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;

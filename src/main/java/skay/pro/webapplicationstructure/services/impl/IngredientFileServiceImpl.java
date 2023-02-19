@@ -88,7 +88,7 @@ public class IngredientFileServiceImpl implements FileService {
         cleanDataFile();
         FileOutputStream fos = new FileOutputStream(getDataFile());
         try {
-            IOUtils.copy(file.getInputStream(), fos);
+           IOUtils.copy(file.getInputStream(), fos);
         } catch (IOException e) {
             throw new FileNotFoundException("проблема сохранения файла");
 
