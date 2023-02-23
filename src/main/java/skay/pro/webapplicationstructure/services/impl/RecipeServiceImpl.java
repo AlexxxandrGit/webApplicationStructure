@@ -69,6 +69,11 @@ public class RecipeServiceImpl implements RecipeService {
         return recipe;
     }
 
+    @Override
+    public Map<Integer, Recipe> getRecipeMap() {
+        return null;
+    }
+
     @PostConstruct
     public void initRecipe() throws FileProcessingException {
         readFromFileRecipe();
@@ -94,5 +99,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
     }
+
+
 
 }

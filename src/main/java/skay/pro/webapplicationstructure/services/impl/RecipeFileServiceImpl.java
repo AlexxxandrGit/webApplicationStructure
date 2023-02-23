@@ -6,22 +6,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import skay.pro.webapplicationstructure.model.Recipe;
 import skay.pro.webapplicationstructure.services.FileService;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Map;
 
 @Service("recipeFileService")
 
 public class RecipeFileServiceImpl implements FileService {
-    @Value("src/main/resources")
+
+    @Value("${path.to.files}")
     private String dataFilePathRecipe;
-    @Value("recipe.json")
+    @Value("${name.of.recipe.file}")
     private String dataFileNameRecipe;
 
     private Path path;
+
 
     @PostConstruct
     private void init() {
@@ -74,7 +79,7 @@ public class RecipeFileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStreamResource exportFiles() throws FileNotFoundException {
+    public InputStreamResource exportFiles(Map<Integer, Recipe> recipeMap) throws FileNotFoundException {
         File file = getDataFile();
         return new InputStreamResource(new FileInputStream(file));
     }
@@ -92,7 +97,39 @@ public class RecipeFileServiceImpl implements FileService {
     }
 
     @Override
+    public InputStreamResource exportTxtFile(Map<Integer, Recipe> recipeMap) throws FileNotFoundException, IOException {
+        Path path = this.createAllRecipesFile("allRecipes");
+        for (Recipe recipe : recipeMap.values()) {
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+                writer.append(" Название рецепта: ");
+                writer.append(recipe.getName());
+                writer.append("\n Время приготовления: ");
+                writer.append(String.valueOf(recipe.getTimeForPreparing()));
+                writer.append(" ");
+                writer.append("\n Ингредиенты: ");
+                writer.append(String.valueOf(recipe.getIngredients()));
+                writer.append("\n Шаги приготовления: ");
+                writer.append(String.valueOf(recipe.getCookingSteps()));
+            }
+        }
+
+        File file = path.toFile();
+        return new InputStreamResource(new FileInputStream(file));
+    }
+
+    private Path createAllRecipesFile(String suffix) throws IOException {
+        if (Files.exists(Path.of(dataFilePathRecipe, suffix))) {
+            Files.delete(Path.of(dataFilePathRecipe, suffix));
+            Files.createFile(Path.of(dataFilePathRecipe, suffix));
+            return Path.of(dataFilePathRecipe, suffix);
+        }
+        return Files.createFile(Path.of(dataFilePathRecipe, suffix));
+    }
+    @Override
     public Path getPath() {
         return path;
     }
+
+
+
 }

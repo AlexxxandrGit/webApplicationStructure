@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode
+@ToString
 public class Ingredient {
 
     @NotBlank(message = "Название не может быть пустым")

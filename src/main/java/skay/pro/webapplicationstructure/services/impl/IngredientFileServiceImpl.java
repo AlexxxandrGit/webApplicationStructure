@@ -1,19 +1,19 @@
 package skay.pro.webapplicationstructure.services.impl;
 
 import exception.FileProcessingException;
-import lombok.Data;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.webjars.NotFoundException;
+import skay.pro.webapplicationstructure.model.Recipe;
 import skay.pro.webapplicationstructure.services.FileService;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 
 @Service("ingredientFileService")
 
@@ -78,7 +78,7 @@ public class IngredientFileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStreamResource exportFiles() throws FileNotFoundException {
+    public InputStreamResource exportFiles(Map<Integer, Recipe> recipeMap) throws FileNotFoundException {
         File file = getDataFile();
         return new InputStreamResource(new FileInputStream(file));
     }
@@ -98,5 +98,10 @@ public class IngredientFileServiceImpl implements FileService {
     @Override
     public Path getPath() {
         return path;
+    }
+
+    @Override
+    public InputStreamResource exportTxtFile(Map<Integer, Recipe> recipeMap) throws FileNotFoundException, IOException {
+        return null;
     }
 }

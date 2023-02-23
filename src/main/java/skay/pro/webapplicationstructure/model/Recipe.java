@@ -15,6 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode
+@ToString
 public class Recipe {
     @NotBlank
     private String name;
