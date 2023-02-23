@@ -100,9 +100,4 @@ public class IngredientFileServiceImpl implements FileService {
         return path;
     }
 
-    @Override
-    public InputStreamResource exportTxtFile(Map<Integer, Recipe> recipeMap) throws FileNotFoundException, IOException {
-        File file = getDataFile();
-        return new InputStreamResource(new FileInputStream(file));
-    }
 }

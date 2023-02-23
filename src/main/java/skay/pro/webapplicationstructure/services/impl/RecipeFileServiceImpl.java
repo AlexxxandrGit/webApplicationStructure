@@ -96,7 +96,6 @@ public class RecipeFileServiceImpl implements FileService {
         }
     }
 
-    @Override
     public InputStreamResource exportTxtFile(Map<Integer, Recipe> recipeMap) throws FileNotFoundException, IOException {
         Path path = this.createAllRecipesFile("allRecipes");
         for (Recipe recipe : recipeMap.values()) {

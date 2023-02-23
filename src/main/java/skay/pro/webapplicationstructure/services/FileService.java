@@ -24,7 +24,6 @@ public interface FileService {
 
     void importFile(MultipartFile file) throws NotFoundException, FileNotFoundException;
 
-    InputStreamResource exportTxtFile(Map<Integer, Recipe> recipeMap) throws FileNotFoundException, IOException;
 
     public Path getPath();
 
