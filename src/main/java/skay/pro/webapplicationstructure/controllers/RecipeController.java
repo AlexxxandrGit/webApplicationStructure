@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skay.pro.webapplicationstructure.model.Ingredient;
 import skay.pro.webapplicationstructure.model.Recipe;
@@ -63,6 +64,5 @@ public class RecipeController {
     Recipe updateRecipe(@PathVariable Integer id, @RequestBody Recipe recipe) {
         return recipeService.updateRecipe(id, recipe);
     }
-
 }
 

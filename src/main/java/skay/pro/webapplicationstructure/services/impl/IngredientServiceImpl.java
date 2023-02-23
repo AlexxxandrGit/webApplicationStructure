@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.FileProcessingException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import skay.pro.webapplicationstructure.model.Ingredient;
@@ -18,6 +19,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 @Service
+@Data
 
 public class IngredientServiceImpl implements IngredientService {
     private final FileService fileService;

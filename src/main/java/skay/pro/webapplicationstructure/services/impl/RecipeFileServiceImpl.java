@@ -1,12 +1,15 @@
 package skay.pro.webapplicationstructure.services.impl;
 
 import exception.FileProcessingException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import skay.pro.webapplicationstructure.services.FileService;
 
-import java.io.File;
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -17,6 +20,13 @@ public class RecipeFileServiceImpl implements FileService {
     private String dataFilePathRecipe;
     @Value("recipe.json")
     private String dataFileNameRecipe;
+
+    private Path path;
+
+    @PostConstruct
+    private void init() {
+        path = Path.of(dataFilePathRecipe, dataFileNameRecipe);
+    }
 
 
     @Override
@@ -35,7 +45,7 @@ public class RecipeFileServiceImpl implements FileService {
     public String readFromFile() {
         if (Files.exists(Path.of(dataFilePathRecipe, dataFileNameRecipe))) {
             try {
-                return Files.readString(Path.of(dataFilePathRecipe,dataFileNameRecipe));
+                return Files.readString(Path.of(dataFilePathRecipe, dataFileNameRecipe));
             } catch (IOException e) {
                 throw new FileProcessingException("не удалось прочитать файл");
             }
@@ -58,8 +68,31 @@ public class RecipeFileServiceImpl implements FileService {
     }
 
     @Override
-    public File getDataFileTxt() {
+    public File getDataFile() {
         return new File(dataFilePathRecipe + "/" + dataFileNameRecipe);
 
+    }
+
+    @Override
+    public InputStreamResource exportFiles() throws FileNotFoundException {
+        File file = getDataFile();
+        return new InputStreamResource(new FileInputStream(file));
+    }
+
+    @Override
+    public void importFile(MultipartFile file) throws FileNotFoundException {
+        cleanDataFile();
+        FileOutputStream fos = new FileOutputStream(getDataFile());
+        try {
+            IOUtils.copy(file.getInputStream(), fos);
+        } catch (IOException e) {
+            throw new FileNotFoundException("проблема сохранения файла");
+
+        }
+    }
+
+    @Override
+    public Path getPath() {
+        return path;
     }
 }
