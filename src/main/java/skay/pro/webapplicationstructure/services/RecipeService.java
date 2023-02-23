@@ -18,6 +18,7 @@ public interface RecipeService {
     Recipe remuveRecipe(int id);
 
     Recipe updateRecipe(int id, Recipe recipe);
+
     Map<Integer, Recipe> getRecipeMap();
 
 

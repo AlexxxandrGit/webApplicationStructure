@@ -12,6 +12,7 @@ import skay.pro.webapplicationstructure.services.FileService;
 import skay.pro.webapplicationstructure.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +71,13 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+
     public Map<Integer, Recipe> getRecipeMap() {
-        return null;
+        if (recipeMap.containsKey(id)) {
+            throw new RuntimeException("Рецепт с заданным id не найден");
+        }
+        recipeMap.values();
+        return recipeMap;
     }
 
     @PostConstruct
@@ -99,7 +105,6 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
     }
-
 
 
 }

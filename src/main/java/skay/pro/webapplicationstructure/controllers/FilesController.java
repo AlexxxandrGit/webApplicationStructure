@@ -26,7 +26,7 @@ public class FilesController {
     private final RecipeService recipeService;
 
     public FilesController(@Qualifier("recipeFileService") FileService recipeFileService, @Qualifier("ingredientFileService")
-    FileService ingredientFileService,RecipeService recipeService) {
+    FileService ingredientFileService, RecipeService recipeService) {
         this.recipeFileService = recipeFileService;
         this.ingredientFileService = ingredientFileService;
         this.recipeService = recipeService;
