@@ -12,6 +12,7 @@ import skay.pro.webapplicationstructure.services.FileService;
 import skay.pro.webapplicationstructure.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +70,13 @@ public class RecipeServiceImpl implements RecipeService {
         return recipe;
     }
 
+    @Override
+
+    public Map<Integer, Recipe> getRecipeMap() {
+        recipeMap.values();
+        return recipeMap;
+    }
+
     @PostConstruct
     public void initRecipe() throws FileProcessingException {
         readFromFileRecipe();
@@ -94,5 +102,6 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
     }
+
 
 }

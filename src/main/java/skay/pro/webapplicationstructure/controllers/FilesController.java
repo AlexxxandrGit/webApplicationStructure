@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import skay.pro.webapplicationstructure.services.FileService;
+import skay.pro.webapplicationstructure.services.RecipeService;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,17 +23,19 @@ import java.nio.file.Files;
 public class FilesController {
     private final FileService recipeFileService;
     private final FileService ingredientFileService;
+    private final RecipeService recipeService;
 
     public FilesController(@Qualifier("recipeFileService") FileService recipeFileService, @Qualifier("ingredientFileService")
-    FileService ingredientFileService) {
+    FileService ingredientFileService, RecipeService recipeService) {
         this.recipeFileService = recipeFileService;
         this.ingredientFileService = ingredientFileService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/ingredient/export")
     @Operation(description = "экспорт файла ингредиентов")
     public ResponseEntity<InputStreamResource> downLoadIngredientFile() throws IOException {
-        InputStreamResource inputStreamResource = ingredientFileService.exportFiles();
+        InputStreamResource inputStreamResource = ingredientFileService.exportFiles(recipeService.getRecipeMap());
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .contentLength(Files.size(ingredientFileService.getPath()))
@@ -51,15 +53,14 @@ public class FilesController {
 
 
     @GetMapping("/recipe/export")
-    @Operation(description = "экспорт файла рецептов")
-    public ResponseEntity<InputStreamResource> downLoadRecipeFile() throws IOException {
-        InputStreamResource inputStreamResource = recipeFileService.exportFiles();
+    @Operation(description = "Экспорт файла рецептов")
+    public ResponseEntity<InputStreamResource> downloadTxtRecipeFile() throws IOException {
+        InputStreamResource inputStreamResource = recipeFileService.exportFiles(recipeService.getRecipeMap());
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentLength(Files.size(recipeFileService.getPath()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename =\"Recipe.json\"")
+                .contentLength(Files.size(ingredientFileService.getPath()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename =\"Recipes.json\"")
                 .body(inputStreamResource);
-
     }
 
     @PostMapping(value = "/recipe/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -67,6 +68,17 @@ public class FilesController {
     public ResponseEntity<Void> uploadDataFileRecipe(@RequestParam MultipartFile file) throws FileNotFoundException {
         recipeFileService.importFile(file);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recipe/exporttxt")
+    @Operation(description = "Экспорт файла рецептов")
+    public ResponseEntity<InputStreamResource> downloadRecipeFile() throws IOException {
+        InputStreamResource inputStreamResource = recipeFileService.exportFiles(recipeService.getRecipeMap());
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .contentLength(Files.size(recipeFileService.getPath()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename =\"AllRecipes.txt\"")
+                .body(inputStreamResource);
     }
 
 
