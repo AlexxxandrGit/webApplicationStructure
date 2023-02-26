@@ -73,9 +73,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
 
     public Map<Integer, Recipe> getRecipeMap() {
-        if (recipeMap.containsKey(id)) {
-            throw new RuntimeException("Рецепт с заданным id не найден");
-        }
         recipeMap.values();
         return recipeMap;
     }
